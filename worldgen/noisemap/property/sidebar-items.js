@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Seed","Sets the seed that is used for generating the noise."],["Size","Sets the size of the generated chunks."],["Step","Sets the increment in x and y for each coordinate in the noise map."]],"trait":[["Property","A property is an option that can be set on a noise map."]]});
