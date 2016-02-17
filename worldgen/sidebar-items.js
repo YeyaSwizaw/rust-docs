@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["noise","The Noise module provides generators for different kinds of noise."],["noisemap","Generators for finite noise maps"],["world","For generating maps of specfic objects based on thresholds."]]});

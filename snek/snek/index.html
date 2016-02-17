@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `snek` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, snek">
+
+    <title>snek - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'snek', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>snek</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-0' class='srclink' href='../src/snek/lib.rs.html#19-143' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>This library provides a convenient interface for loading dynamic libraries
+at runtime, and for retrieving symbols from them. The recommended use is
+via the <a href="macro.snek!.html"><code>snek!</code></a> macro, which defines a structure which
+loads symbols on construction and has methods for each one, however it is
+also possible to manually load libraries and symbols using a <a href="struct.Snek.html"><code>Snek</code></a>
+instance.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1><pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>snek</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
+
+<span class='kw'>use</span> <span class='ident'>libc</span>::<span class='ident'>c_int</span>;
+
+<span class='macro'>snek</span><span class='macro'>!</span> {
+    <span class='ident'>Example</span> {
+        <span class='ident'>hello</span>: () <span class='op'>-&gt;</span> (),
+        <span class='ident'>add</span>: (<span class='ident'>x</span>: <span class='ident'>c_int</span>, <span class='ident'>y</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>example</span>) <span class='op'>=</span> <span class='ident'>Example</span>::<span class='ident'>load</span>(<span class='string'>&quot;libexample.so&quot;</span>) {
+        <span class='ident'>example</span>.<span class='ident'>hello</span>();
+        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;2 + 4 = {}&quot;</span>, <span class='ident'>example</span>.<span class='ident'>add</span>(<span class='number'>2</span>, <span class='number'>4</span>));
+    }
+}</pre>
+</div><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='macro' href='macro.snek!.html'
+                               title='snek::snek!'>snek!</a></td>
+                        <td class='docblock short'>
+                             <p>This macro is used to generate a struct that wraps a dynamic library with
+generated loading code. Each defined function will be loaded as a symbol
+from the library when an instance of the struct is constructed, and can be
+called via functions of the same name attached to the struct.</p>
+                        </td>
+                    </tr>
+                </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Snek.html'
+                               title='snek::Snek'>Snek</a></td>
+                        <td class='docblock short'>
+                             <p>This provides an interface for manually loading a dynamic library and
+symbols from it. While this exists, it is more recommended to use the 
+<a href="macro.snek!.html"><code>snek!</code></a> macro to generate a wrapper for a library 
+automatically.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Symbol.html'
+                               title='snek::Symbol'>Symbol</a></td>
+                        <td class='docblock short'>
+                             <p>This provides an interface around a symbol loaded from a
+dynamic library. This should not be constructed manually,
+but returned from <a href="struct.Snek.html#method.symbol"><code>Snek::symbol</code></a>
+or used internally via the <a href="macro.snek!.html"><code>snek!</code></a> macro.</p>
+                        </td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Error.html'
+                               title='snek::Error'>Error</a></td>
+                        <td class='docblock short'>
+                             <p>This enum stores information about the error returned when loading a library
+or symbol fails. On unix platforms, it hold the result of <code>dlerror()</code>.</p>
+                        </td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.drop_library.html'
+                               title='snek::drop_library'>drop_library</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.load_library.html'
+                               title='snek::load_library'>load_library</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.load_symbol.html'
+                               title='snek::load_symbol'>load_symbol</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "snek";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

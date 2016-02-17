@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["coherent","A provider of coherent noise. This generates a noise value for each corner of the unit square the given point is in, and then calculates the noise value based on these."],["perlin","A provider of perlin noise."]],"trait":[["NoiseProvider","The trait for a noise generator."]]});

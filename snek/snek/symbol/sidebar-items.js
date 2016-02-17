@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Symbol","This provides an interface around a symbol loaded from a dynamic library. This should not be constructed manually, but returned from `Snek::symbol` or used internally via the `snek!` macro."]]});
