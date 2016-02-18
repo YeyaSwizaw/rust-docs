@@ -56,7 +56,7 @@ or used internally via the <a href="macro.snek!.html"><code>snek!</code></a> mac
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../snek/struct.Symbol.html' title='snek::Symbol'>Symbol</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(symbol: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='enum' href='../libc/enum.c_void.html' title='libc::c_void'>c_void</a>) -&gt; <a class='struct' href='../snek/struct.Symbol.html' title='snek::Symbol'>Symbol</a>&lt;'a&gt;</code></h4>
 <div class='docblock'><p>Construct a new <code>Symbol</code> wrapping a symbol. This should not be used
 manually, however is public to allow access from the 
-<a href="macro.snek!.heml"><code>snek!</code></a> macro.</p>
+<a href="macro.snek!.html"><code>snek!</code></a> macro.</p>
 </div><h4 id='method.with' class='method'><code>fn <a href='#method.with' class='fnname'>with</a>&lt;F, T, U&gt;(&amp;self, f: F) -&gt; U <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(T) -&gt; U</span></code></h4>
 <div class='docblock'><p>Use the symbol as if it was a certain type. There is no way of checking
 that the symbol is of the specified type, so this function should be used

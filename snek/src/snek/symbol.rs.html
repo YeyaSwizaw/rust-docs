@@ -151,7 +151,7 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Symbol</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Construct a new `Symbol` wrapping a symbol. This should not be used</span>
     <span class='doccomment'>/// manually, however is public to allow access from the </span>
-    <span class='doccomment'>/// [`snek!`](macro.snek!.heml) macro.</span>
+    <span class='doccomment'>/// [`snek!`](macro.snek!.html) macro.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>symbol</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>Symbol</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
         <span class='ident'>Symbol</span> {
             <span class='ident'>symbol</span>: <span class='ident'>symbol</span>,
