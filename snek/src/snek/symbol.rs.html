@@ -114,6 +114,10 @@
 <span id="71">71</span>
 <span id="72">72</span>
 <span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
 </pre><pre class='rust '>
 <span class='comment'>//////////////////////////////////////////////////////////////////////////////</span>
 <span class='comment'>//  File: rust-snek/symbol.rs</span>
@@ -164,6 +168,10 @@
     <span class='doccomment'>/// that the symbol is of the specified type, so this function should be used</span>
     <span class='doccomment'>/// with care.</span>
     <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Safety</span>
+    <span class='doccomment'>/// When calling this function, ensure the type of the symbol is actually the</span>
+    <span class='doccomment'>/// type you say it is.</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>/// ```</span>
     <span class='doccomment'>/// # extern crate libc;</span>
@@ -174,15 +182,15 @@
     <span class='doccomment'>/// # match Snek::load(&quot;libexample.so&quot;) {</span>
     <span class='doccomment'>/// #    Ok(snek) =&gt; match snek.symbol(&quot;add&quot;) {</span>
     <span class='doccomment'>/// #        Ok(symbol) =&gt; {</span>
-    <span class='doccomment'>/// let result: c_int =  symbol.with(|add: extern fn(c_int, c_int) -&gt; c_int| add(3, 7));</span>
+    <span class='doccomment'>/// let result: c_int =  unsafe { symbol.with(|add: extern fn(c_int, c_int) -&gt; c_int| add(3, 7)) };</span>
     <span class='doccomment'>/// #       },</span>
     <span class='doccomment'>/// #       _ =&gt; ()</span>
     <span class='doccomment'>/// #   },</span>
     <span class='doccomment'>/// #   _ =&gt; ()</span>
     <span class='doccomment'>/// # }</span>
     <span class='doccomment'>/// # }</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>T</span>, <span class='ident'>U</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> {
-        <span class='kw'>let</span> <span class='ident'>value</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ptr</span>::<span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>symbol</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>T</span>) };
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>with</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>T</span>, <span class='ident'>U</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> {
+        <span class='kw'>let</span> <span class='ident'>value</span> <span class='op'>=</span> <span class='ident'>ptr</span>::<span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>symbol</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> _ <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>T</span>);
         <span class='ident'>f</span>(<span class='ident'>value</span>)
     }
 }

@@ -194,9 +194,9 @@
 <span class='doccomment'>/// # fn main() {</span>
 <span class='doccomment'>/// match Snek::load(&quot;libexample.so&quot;) {</span>
 <span class='doccomment'>///     Ok(snek) =&gt; match snek.symbol(&quot;add&quot;) {</span>
-<span class='doccomment'>///         Ok(symbol) =&gt; println!(&quot;{}&quot;, symbol.with(</span>
+<span class='doccomment'>///         Ok(symbol) =&gt; println!(&quot;{}&quot;, unsafe { symbol.with(</span>
 <span class='doccomment'>///             |add: extern fn(c_int, c_int) -&gt; c_int| add(3, 7)</span>
-<span class='doccomment'>///         )),</span>
+<span class='doccomment'>///         ) }),</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///         _ =&gt; ()</span>
 <span class='doccomment'>///     },</span>

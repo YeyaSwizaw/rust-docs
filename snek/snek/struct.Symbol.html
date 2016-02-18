@@ -57,13 +57,17 @@ or used internally via the <a href="macro.snek!.html"><code>snek!</code></a> mac
 <div class='docblock'><p>Construct a new <code>Symbol</code> wrapping a symbol. This should not be used
 manually, however is public to allow access from the 
 <a href="macro.snek!.html"><code>snek!</code></a> macro.</p>
-</div><h4 id='method.with' class='method'><code>fn <a href='#method.with' class='fnname'>with</a>&lt;F, T, U&gt;(&amp;self, f: F) -&gt; U <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(T) -&gt; U</span></code></h4>
+</div><h4 id='method.with' class='method'><code>unsafe fn <a href='#method.with' class='fnname'>with</a>&lt;F, T, U&gt;(&amp;self, f: F) -&gt; U <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(T) -&gt; U</span></code></h4>
 <div class='docblock'><p>Use the symbol as if it was a certain type. There is no way of checking
 that the symbol is of the specified type, so this function should be used
 with care.</p>
 
+<h1 id='safety' class='section-header'><a href='#safety'>Safety</a></h1>
+<p>When calling this function, ensure the type of the symbol is actually the
+type you say it is.</p>
+
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1><pre class='rust rust-example-rendered'>
-<span class='kw'>let</span> <span class='ident'>result</span>: <span class='ident'>c_int</span> <span class='op'>=</span>  <span class='ident'>symbol</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>add</span>: <span class='kw'>extern</span> <span class='kw'>fn</span>(<span class='ident'>c_int</span>, <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span><span class='op'>|</span> <span class='ident'>add</span>(<span class='number'>3</span>, <span class='number'>7</span>));</pre>
+<span class='kw'>let</span> <span class='ident'>result</span>: <span class='ident'>c_int</span> <span class='op'>=</span>  <span class='kw'>unsafe</span> { <span class='ident'>symbol</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>add</span>: <span class='kw'>extern</span> <span class='kw'>fn</span>(<span class='ident'>c_int</span>, <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span><span class='op'>|</span> <span class='ident'>add</span>(<span class='number'>3</span>, <span class='number'>7</span>)) };</pre>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../snek/struct.Symbol.html' title='snek::Symbol'>Symbol</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>

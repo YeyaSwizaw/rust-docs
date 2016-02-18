@@ -194,6 +194,7 @@
 <span id="151">151</span>
 <span id="152">152</span>
 <span id="153">153</span>
+<span id="154">154</span>
 </pre><pre class='rust '>
 <span class='comment'>//////////////////////////////////////////////////////////////////////////////</span>
 <span class='comment'>//  File: rust-snek/lib.rs</span>
@@ -223,8 +224,7 @@
 <span class='doccomment'>//! # Safety</span>
 <span class='doccomment'>//! There is no way of verifying the type of loaded symbols, so both methods of</span>
 <span class='doccomment'>//! using them assume that the given type is correct - this library should be used</span>
-<span class='doccomment'>//! very carefully. Also consider it unstable at the moment, I mostly have no idea</span>
-<span class='doccomment'>//! what I am doing.</span>
+<span class='doccomment'>//! very carefully. Consider everything very unstable at the moment.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! # Example</span>
 <span class='doccomment'>//! ```</span>
@@ -242,8 +242,8 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! fn main() {</span>
 <span class='doccomment'>//!     if let Ok(example) = Example::load(&quot;libexample.so&quot;) {</span>
-<span class='doccomment'>//!         example.hello();</span>
-<span class='doccomment'>//!         println!(&quot;2 + 4 = {}&quot;, example.add(2, 4));</span>
+<span class='doccomment'>//!         unsafe { example.hello() };</span>
+<span class='doccomment'>//!         println!(&quot;2 + 4 = {}&quot;, unsafe { example.add(2, 4) });</span>
 <span class='doccomment'>//!     }</span>
 <span class='doccomment'>//! }</span>
 
@@ -268,12 +268,14 @@
 <span class='doccomment'>/// from the library when an instance of the struct is constructed, and can be</span>
 <span class='doccomment'>/// called via functions of the same name attached to the struct.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// As with [`Symbol::with`](struct.Symbol.html#method.with), there is no way</span>
-<span class='doccomment'>/// of verifying the types of the functions so care should be taken to ensure</span>
-<span class='doccomment'>/// they are correct.</span>
-<span class='doccomment'>///</span>
 <span class='doccomment'>/// In the same way as a [`Snek`](struct.Snek.html) instance, when an instance</span>
 <span class='doccomment'>/// of a struct defined by this macro is dropped, the library is unloaded.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// # Safety</span>
+<span class='doccomment'>/// As with [`Symbol::with`](struct.Symbol.html#method.with), there is no way</span>
+<span class='doccomment'>/// of verifying the types of the functions so care should be taken to ensure</span>
+<span class='doccomment'>/// they are correct. All the imported functions will be unsafe as a result</span>
+<span class='doccomment'>/// of this.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// # Example</span>
 <span class='doccomment'>/// This example loads the same function as given in the [`Snek`](struct.Snek.html)</span>
@@ -291,7 +293,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// fn main() {</span>
 <span class='doccomment'>///     if let Ok(example) = Example::load(&quot;libexample.so&quot;) {</span>
-<span class='doccomment'>///         println!(&quot;{}&quot;, example.add(3, 7))</span>
+<span class='doccomment'>///         println!(&quot;{}&quot;, unsafe { example.add(3, 7) })</span>
 <span class='doccomment'>///     }</span>
 <span class='doccomment'>/// }</span>
 <span class='doccomment'>/// ```</span>
@@ -336,7 +338,7 @@
                 })
             }
 
-            $(<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>symbol</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pn</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pt</span>),<span class='op'>*</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ot</span> {
+            $(<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>symbol</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pn</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pt</span>),<span class='op'>*</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ot</span> {
                 <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>symbol</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>f</span>: <span class='kw'>extern</span> <span class='kw'>fn</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pt</span>),<span class='op'>*</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ot</span><span class='op'>|</span> <span class='ident'>f</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pn</span>),<span class='op'>*</span>))
             })<span class='op'>*</span>
         }

@@ -65,9 +65,9 @@ any loaded symbols is tied to the lifetime of the <code>Snek</code> instance.</p
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1><pre class='rust rust-example-rendered'>
 <span class='kw'>match</span> <span class='ident'>Snek</span>::<span class='ident'>load</span>(<span class='string'>&quot;libexample.so&quot;</span>) {
     <span class='prelude-val'>Ok</span>(<span class='ident'>snek</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>snek</span>.<span class='ident'>symbol</span>(<span class='string'>&quot;add&quot;</span>) {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>symbol</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>symbol</span>.<span class='ident'>with</span>(
+        <span class='prelude-val'>Ok</span>(<span class='ident'>symbol</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='kw'>unsafe</span> { <span class='ident'>symbol</span>.<span class='ident'>with</span>(
             <span class='op'>|</span><span class='ident'>add</span>: <span class='kw'>extern</span> <span class='kw'>fn</span>(<span class='ident'>c_int</span>, <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span><span class='op'>|</span> <span class='ident'>add</span>(<span class='number'>3</span>, <span class='number'>7</span>)
-        )),
+        ) }),
 
         _ <span class='op'>=&gt;</span> ()
     },
