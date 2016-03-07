@@ -46,12 +46,14 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-378' class='srclink' href='../../src/worldgen/noisemap/mod.rs.html#108-134' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-378' class='srclink' href='../../src/worldgen/noisemap/mod.rs.html#115-145' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait NoiseMapGeneratorBase {
     fn <a href='#tymethod.generate_chunk' class='fnname'>generate_chunk</a>(&amp;self, x: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;;
     fn <a href='#tymethod.generate_sized_chunk' class='fnname'>generate_sized_chunk</a>(&amp;self, size: <a class='struct' href='../../worldgen/noisemap/struct.Size.html' title='worldgen::noisemap::Size'>Size</a>, x: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;;
     fn <a href='#tymethod.id' class='fnname'>id</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>;
-}</pre><div class='docblock'><p>Base trait for noise maps.</p>
+}</pre><div class='docblock'><p>Base trait for noise maps. This trait containts functions relevent to
+the actual map generation, and is all that is required for constraints
+to generate a world.</p>
 
 <p><code>NoiseMap</code>, <code>ScaledNoiseMap</code>, and <code>NoiseMapCombination</code> all implement
 this trait.</p>
@@ -71,7 +73,11 @@ this trait.</p>
         <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>);
     }
 }</pre>
-</div><h3 id='tymethod.generate_sized_chunk' class='method stab '><code>fn <a href='#tymethod.generate_sized_chunk' class='fnname'>generate_sized_chunk</a>(&amp;self, size: <a class='struct' href='../../worldgen/noisemap/struct.Size.html' title='worldgen::noisemap::Size'>Size</a>, x: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;</code></h3><h3 id='tymethod.id' class='method stab '><code>fn <a href='#tymethod.id' class='fnname'>id</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></h3></div>
+</div><h3 id='tymethod.generate_sized_chunk' class='method stab '><code>fn <a href='#tymethod.generate_sized_chunk' class='fnname'>generate_sized_chunk</a>(&amp;self, size: <a class='struct' href='../../worldgen/noisemap/struct.Size.html' title='worldgen::noisemap::Size'>Size</a>, x: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;</code></h3><div class='docblock'><p>Generate a chunk with a given size instead of the noisemap&#39;s size.</p>
+
+<p>This is used when generating a world.</p>
+</div><h3 id='tymethod.id' class='method stab '><code>fn <a href='#tymethod.id' class='fnname'>id</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></h3><div class='docblock'><p>Return the unique id of the noisemap.</p>
+</div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;T: <a class='trait' href='../../worldgen/noise/trait.NoiseProvider.html' title='worldgen::noise::NoiseProvider'>NoiseProvider</a>&gt; <a class='trait' href='../../worldgen/noisemap/trait.NoiseMapGeneratorBase.html' title='worldgen::noisemap::NoiseMapGeneratorBase'>NoiseMapGeneratorBase</a> for <a class='struct' href='../../worldgen/noisemap/struct.NoiseMap.html' title='worldgen::noisemap::NoiseMap'>NoiseMap</a>&lt;T&gt;</code></li>

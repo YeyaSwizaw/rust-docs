@@ -184,7 +184,7 @@
 <span class='comment'>//  limitations under the License.</span>
 <span class='comment'>//////////////////////////////////////////////////////////////////////////////</span>
 
-<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>NoiseMap</span>;
+<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>NoiseMapGenerator</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Ordering</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
@@ -192,7 +192,7 @@
 
 <span class='doccomment'>/// A property is an option that can be set on a noise map.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Property</span> : <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>Copy</span> {
-    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>NM</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NM</span>) <span class='op'>-&gt;</span> <span class='ident'>NM</span>;
 }
 
 <span class='doccomment'>/// Sets the seed that is used for generating the noise.</span>
@@ -221,7 +221,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Property</span> <span class='kw'>for</span> <span class='ident'>Seed</span> {
-    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>NM</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NM</span>) <span class='op'>-&gt;</span> <span class='ident'>NM</span> {
         <span class='ident'>nm</span>.<span class='ident'>set_seed</span>(<span class='self'>self</span>)
     }
 }
@@ -247,7 +247,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Property</span> <span class='kw'>for</span> <span class='ident'>Step</span> {
-    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>NM</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NM</span>) <span class='op'>-&gt;</span> <span class='ident'>NM</span> {
         <span class='ident'>nm</span>.<span class='ident'>set_step</span>(<span class='self'>self</span>)
     }
 }
@@ -274,7 +274,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Property</span> <span class='kw'>for</span> <span class='ident'>Size</span> {
-    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>set_to</span><span class='op'>&lt;</span><span class='ident'>NM</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>nm</span>: <span class='ident'>NM</span>) <span class='op'>-&gt;</span> <span class='ident'>NM</span> {
         <span class='ident'>nm</span>.<span class='ident'>set_size</span>(<span class='self'>self</span>)
     }
 }

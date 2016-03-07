@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-218' class='srclink' href='../../src/worldgen/noisemap/mod.rs.html#19-531' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-218' class='srclink' href='../../src/worldgen/noisemap/mod.rs.html#19-585' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Generators for finite noise maps</p>
 
 <p>A <code>NoiseMap</code> takes a <code>NoiseProvider</code> and uses it to generate a map
@@ -150,7 +150,8 @@ noise map.</p>
                         <td><a class='trait' href='trait.NoiseMapGenerator.html'
                                title='worldgen::noisemap::NoiseMapGenerator'>NoiseMapGenerator</a></td>
                         <td class='docblock short'>
-                             
+                             <p>This trait contains functions used for initially creating and combining noisemaps.
+(The <code>Mul</code> requirement is used for scaling a noisemap)</p>
                         </td>
                     </tr>
                 
@@ -158,7 +159,27 @@ noise map.</p>
                         <td><a class='trait' href='trait.NoiseMapGeneratorBase.html'
                                title='worldgen::noisemap::NoiseMapGeneratorBase'>NoiseMapGeneratorBase</a></td>
                         <td class='docblock short'>
-                             <p>Base trait for noise maps.</p>
+                             <p>Base trait for noise maps. This trait containts functions relevent to
+the actual map generation, and is all that is required for constraints
+to generate a world.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Property.html'
+                               title='worldgen::noisemap::Property'>Property</a></td>
+                        <td class='docblock short'>
+                             <p>A property is an option that can be set on a noise map.</p>
+                        </td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.next_id.html'
+                               title='worldgen::noisemap::next_id'>next_id</a></td>
+                        <td class='docblock short'>
+                             <p>Returns the next unique noisemap id. If implementing a custom noisemap,
+use this function to give each instance an id.</p>
                         </td>
                     </tr>
                 </table></section>

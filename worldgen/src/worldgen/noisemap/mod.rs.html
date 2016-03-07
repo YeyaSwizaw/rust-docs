@@ -572,6 +572,60 @@
 <span id="529">529</span>
 <span id="530">530</span>
 <span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
 </pre><pre class='rust '>
 <span class='comment'>//////////////////////////////////////////////////////////////////////////////</span>
 <span class='comment'>//  File: rust-worldgen/noisemap/mod.rs</span>
@@ -669,14 +723,21 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicUsize</span>, <span class='ident'>Ordering</span>, <span class='ident'>ATOMIC_USIZE_INIT</span>};
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>property</span>::{<span class='ident'>Seed</span>, <span class='ident'>Step</span>, <span class='ident'>Size</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>property</span>::<span class='ident'>Property</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>property</span>::{<span class='ident'>Seed</span>, <span class='ident'>Step</span>, <span class='ident'>Size</span>, <span class='ident'>Property</span>};
 
 <span class='kw'>mod</span> <span class='ident'>property</span>;
 
 <span class='kw'>static</span> <span class='ident'>NEXT_NM_ID</span>: <span class='ident'>AtomicUsize</span> <span class='op'>=</span> <span class='ident'>ATOMIC_USIZE_INIT</span>;
 
-<span class='doccomment'>/// Base trait for noise maps.</span>
+<span class='doccomment'>/// Returns the next unique noisemap id. If implementing a custom noisemap,</span>
+<span class='doccomment'>/// use this function to give each instance an id.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>next_id</span>() <span class='op'>-&gt;</span> <span class='ident'>u64</span> {
+    <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+}
+
+<span class='doccomment'>/// Base trait for noise maps. This trait containts functions relevent to</span>
+<span class='doccomment'>/// the actual map generation, and is all that is required for constraints</span>
+<span class='doccomment'>/// to generate a world.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// `NoiseMap`, `ScaledNoiseMap`, and `NoiseMapCombination` all implement</span>
 <span class='doccomment'>/// this trait.</span>
@@ -703,14 +764,26 @@
     <span class='doccomment'>/// ```</span>
     <span class='kw'>fn</span> <span class='ident'>generate_chunk</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>i64</span>, <span class='ident'>y</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;&gt;</span>;
 
+    <span class='doccomment'>/// Generate a chunk with a given size instead of the noisemap&#39;s size.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This is used when generating a world.</span>
     <span class='kw'>fn</span> <span class='ident'>generate_sized_chunk</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>, <span class='ident'>x</span>: <span class='ident'>i64</span>, <span class='ident'>y</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;&gt;</span>;
 
+    <span class='doccomment'>/// Return the unique id of the noisemap.</span>
     <span class='kw'>fn</span> <span class='ident'>id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u64</span>;
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>NoiseMapGenerator</span> : <span class='ident'>NoiseMapGeneratorBase</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
+<span class='doccomment'>/// This trait contains functions used for initially creating and combining noisemaps.</span>
+<span class='doccomment'>/// (The ```Mul``` requirement is used for scaling a noisemap)</span>
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>NoiseMapGenerator</span> : <span class='ident'>NoiseMapGeneratorBase</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>i64</span>, <span class='ident'>Output</span><span class='op'>=</span><span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='kw'>Self</span><span class='op'>&gt;&gt;</span> {
     <span class='doccomment'>/// Set a property on the noise map.</span>
     <span class='kw'>fn</span> <span class='ident'>set</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Property</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>property</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>;
+
+    <span class='doccomment'>/// These individual set functions are called by the relevant properties, and</span>
+    <span class='doccomment'>/// while can be called manually, it is nicer to use the generic set function.</span>
+    <span class='kw'>fn</span> <span class='ident'>set_size</span>(<span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>;
+    <span class='kw'>fn</span> <span class='ident'>set_seed</span>(<span class='self'>self</span>, <span class='ident'>seed</span>: <span class='ident'>Seed</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>;
+    <span class='kw'>fn</span> <span class='ident'>set_step</span>(<span class='self'>self</span>, <span class='ident'>step</span>: <span class='ident'>Step</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>;
     
     <span class='doccomment'>/// Returns the size of the noise map.</span>
     <span class='kw'>fn</span> <span class='ident'>get_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Size</span> <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>;
@@ -787,7 +860,7 @@
         <span class='ident'>NoiseMap</span> {
             <span class='ident'>noise</span>: <span class='ident'>noise</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>,
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
 
             ..<span class='ident'>Default</span>::<span class='ident'>default</span>()
         }
@@ -813,6 +886,8 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>NoiseProvider</span><span class='op'>&gt;</span> <span class='ident'>NoiseMapGenerator</span> <span class='kw'>for</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='comment'>// type ScaledInner = NoiseMap&lt;T&gt;;</span>
+
     <span class='kw'>fn</span> <span class='ident'>set</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Property</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>property</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>property</span>.<span class='ident'>set_to</span>(<span class='self'>self</span>)
     }
@@ -820,9 +895,7 @@
     <span class='kw'>fn</span> <span class='ident'>get_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
         <span class='self'>self</span>.<span class='ident'>size</span>
     }
-}
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>set_seed</span>(<span class='self'>self</span>, <span class='ident'>seed</span>: <span class='ident'>Seed</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>NoiseMap</span> {
             <span class='ident'>seed</span>: <span class='ident'>seed</span>,
@@ -861,6 +934,8 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span> <span class='ident'>NoiseMapGenerator</span> <span class='kw'>for</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='comment'>// type ScaledInner = T;</span>
+
     <span class='kw'>fn</span> <span class='ident'>set</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Property</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>property</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>ScaledNoiseMap</span> {
             <span class='ident'>nm</span>: <span class='self'>self</span>.<span class='ident'>nm</span>.<span class='ident'>set</span>(<span class='ident'>property</span>),
@@ -871,10 +946,31 @@
     <span class='kw'>fn</span> <span class='ident'>get_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
         <span class='self'>self</span>.<span class='ident'>nm</span>.<span class='ident'>get_size</span>()
     }
+
+    <span class='kw'>fn</span> <span class='ident'>set_seed</span>(<span class='self'>self</span>, <span class='ident'>seed</span>: <span class='ident'>Seed</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>set</span>(<span class='ident'>seed</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>set_step</span>(<span class='self'>self</span>, <span class='ident'>step</span>: <span class='ident'>Step</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>set</span>(<span class='ident'>step</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>set_size</span>(<span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>set</span>(<span class='ident'>size</span>)
+    }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>scale</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>i64</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>nm</span>: <span class='ident'>T</span>, <span class='ident'>scale</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='ident'>ScaledNoiseMap</span> {
+            <span class='ident'>nm</span>: <span class='ident'>nm</span>,
+            <span class='ident'>scale</span>: <span class='ident'>scale</span>,
+
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>()
+        }
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scale</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>i64</span> {
         <span class='self'>self</span>.<span class='ident'>scale</span>
     }
 }
@@ -888,13 +984,13 @@
 
     <span class='kw'>fn</span> <span class='ident'>generate_sized_chunk</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>, <span class='ident'>x</span>: <span class='ident'>i64</span>, <span class='ident'>y</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>outer</span> {
-            <span class='self'>self</span>.<span class='ident'>nm1</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>).<span class='ident'>iter</span>()
-                .<span class='ident'>zip</span>(<span class='self'>self</span>.<span class='ident'>nm2</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>).<span class='ident'>iter</span>())
-                .<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lr</span>, <span class='ident'>rr</span>)<span class='op'>|</span> <span class='ident'>lr</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>rr</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lv</span>, <span class='ident'>rv</span>)<span class='op'>|</span> (<span class='ident'>lv</span> <span class='op'>+</span> <span class='ident'>rv</span>) <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>total_scale</span> <span class='kw'>as</span> <span class='ident'>f64</span>).<span class='ident'>collect</span>()).<span class='ident'>collect</span>()
+            <span class='kw'>let</span> <span class='ident'>nm1_map</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>nm1</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>);
+            <span class='kw'>let</span> <span class='ident'>nm2_map</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>nm2</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>);
+            <span class='ident'>nm1_map</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>nm2_map</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lr</span>, <span class='ident'>rr</span>)<span class='op'>|</span> <span class='ident'>lr</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>rr</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lv</span>, <span class='ident'>rv</span>)<span class='op'>|</span> (<span class='ident'>lv</span> <span class='op'>+</span> <span class='ident'>rv</span>) <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>total_scale</span> <span class='kw'>as</span> <span class='ident'>f64</span>).<span class='ident'>collect</span>()).<span class='ident'>collect</span>()
         } <span class='kw'>else</span> {
-            <span class='self'>self</span>.<span class='ident'>nm1</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>).<span class='ident'>iter</span>()
-                .<span class='ident'>zip</span>(<span class='self'>self</span>.<span class='ident'>nm2</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>).<span class='ident'>iter</span>())
-                .<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lr</span>, <span class='ident'>rr</span>)<span class='op'>|</span> <span class='ident'>lr</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>rr</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lv</span>, <span class='ident'>rv</span>)<span class='op'>|</span> <span class='ident'>lv</span> <span class='op'>+</span> <span class='ident'>rv</span>).<span class='ident'>collect</span>()).<span class='ident'>collect</span>()
+            <span class='kw'>let</span> <span class='ident'>nm1_map</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>nm1</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>);
+            <span class='kw'>let</span> <span class='ident'>nm2_map</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>nm2</span>.<span class='ident'>generate_sized_chunk</span>(<span class='ident'>size</span>, <span class='ident'>x</span>, <span class='ident'>y</span>);
+            <span class='ident'>nm1_map</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>nm2_map</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lr</span>, <span class='ident'>rr</span>)<span class='op'>|</span> <span class='ident'>lr</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>rr</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>lv</span>, <span class='ident'>rv</span>)<span class='op'>|</span> <span class='ident'>lv</span> <span class='op'>+</span> <span class='ident'>rv</span>).<span class='ident'>collect</span>()).<span class='ident'>collect</span>()
         }
     }
 
@@ -904,6 +1000,8 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T1</span>: <span class='ident'>NoiseMapGenerator</span>, <span class='ident'>T2</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span> <span class='ident'>NoiseMapGenerator</span> <span class='kw'>for</span> <span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;</span> {
+    <span class='comment'>// type ScaledInner = NoiseMapCombination&lt;T1, T2&gt;;</span>
+
     <span class='kw'>fn</span> <span class='ident'>set</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Property</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>property</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;</span> {
         <span class='ident'>NoiseMapCombination</span> {
             <span class='ident'>nm1</span>: <span class='self'>self</span>.<span class='ident'>nm1</span>.<span class='ident'>set</span>(<span class='ident'>property</span>),
@@ -914,6 +1012,18 @@
 
     <span class='kw'>fn</span> <span class='ident'>get_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Size</span> {
         <span class='self'>self</span>.<span class='ident'>nm1</span>.<span class='ident'>get_size</span>()
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>set_seed</span>(<span class='self'>self</span>, <span class='ident'>seed</span>: <span class='ident'>Seed</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>set</span>(<span class='ident'>seed</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>set_step</span>(<span class='self'>self</span>, <span class='ident'>step</span>: <span class='ident'>Step</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>set</span>(<span class='ident'>step</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>set_size</span>(<span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Size</span>) <span class='op'>-&gt;</span> <span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>set</span>(<span class='ident'>size</span>)
     }
 }
 
@@ -926,30 +1036,27 @@
     }
 }
 
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>NoiseProvider</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>;
 
     <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>NoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>ScaledNoiseMap</span> {
-            <span class='ident'>nm</span>: <span class='self'>self</span>,
-            <span class='ident'>scale</span>: <span class='ident'>scale</span>,
-
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
-        }
+        <span class='ident'>ScaledNoiseMap</span>::<span class='ident'>new</span>(<span class='self'>self</span>, <span class='ident'>scale</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>;
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>ScaledNoiseMap</span> {
-            <span class='ident'>nm</span>: <span class='self'>self</span>.<span class='ident'>nm</span>,
-            <span class='ident'>scale</span>: <span class='self'>self</span>.<span class='ident'>scale</span> <span class='op'>*</span> <span class='ident'>scale</span>,
+    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
+        <span class='ident'>ScaledNoiseMap</span>::<span class='ident'>new</span>(<span class='self'>self</span>, <span class='ident'>scale</span>)
+    }
+}
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
-        }
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T1</span>: <span class='ident'>NoiseMapGenerator</span>, <span class='ident'>T2</span>: <span class='ident'>NoiseMapGenerator</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;&gt;</span>;
+
+    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>ScaledNoiseMap</span><span class='op'>&lt;</span><span class='ident'>NoiseMapCombination</span><span class='op'>&lt;</span><span class='ident'>T1</span>, <span class='ident'>T2</span><span class='op'>&gt;&gt;</span> {
+        <span class='ident'>ScaledNoiseMap</span>::<span class='ident'>new</span>(<span class='self'>self</span>, <span class='ident'>scale</span>)
     }
 }
 
@@ -964,7 +1071,7 @@
             <span class='ident'>outer</span>: <span class='boolval'>true</span>,
             <span class='ident'>total_scale</span>: <span class='number'>2</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
         }.<span class='ident'>set</span>(<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='self'>self</span>.<span class='ident'>get_size</span>(), <span class='ident'>rhs</span>.<span class='ident'>get_size</span>()))
     }
 }
@@ -1001,7 +1108,7 @@
             <span class='ident'>outer</span>: <span class='boolval'>true</span>,
             <span class='ident'>total_scale</span>: <span class='ident'>scale</span> <span class='op'>+</span> <span class='number'>1</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
         }.<span class='ident'>set</span>(<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>s1</span>, <span class='ident'>s2</span>))
     }
 }
@@ -1023,7 +1130,7 @@
             <span class='ident'>outer</span>: <span class='boolval'>true</span>,
             <span class='ident'>total_scale</span>: <span class='ident'>scale1</span> <span class='op'>+</span> <span class='ident'>scale2</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
         }.<span class='ident'>set</span>(<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>s1</span>, <span class='ident'>s2</span>))
     }
 }
@@ -1052,7 +1159,7 @@
             <span class='ident'>outer</span>: <span class='boolval'>true</span>,
             <span class='ident'>total_scale</span>: <span class='number'>1</span> <span class='op'>+</span> <span class='ident'>scale</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
         }.<span class='ident'>set</span>(<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>s1</span>, <span class='ident'>s2</span>))
     }
 }
@@ -1076,7 +1183,7 @@
             <span class='ident'>outer</span>: <span class='boolval'>true</span>,
             <span class='ident'>total_scale</span>: <span class='ident'>scale1</span> <span class='op'>+</span> <span class='ident'>scale2</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
         }.<span class='ident'>set</span>(<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>s1</span>, <span class='ident'>s2</span>))
     }
 }
@@ -1093,6 +1200,7 @@
 
         <span class='kw'>let</span> <span class='ident'>inner1</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inner</span>();
         <span class='kw'>let</span> <span class='ident'>inner2</span> <span class='op'>=</span> <span class='ident'>rhs</span>.<span class='ident'>inner</span>();
+
         <span class='ident'>NoiseMapCombination</span> {
             <span class='ident'>nm1</span>: <span class='ident'>inner1</span>,
             <span class='ident'>nm2</span>: <span class='ident'>inner2</span>,
@@ -1100,7 +1208,7 @@
             <span class='ident'>outer</span>: <span class='boolval'>true</span>,
             <span class='ident'>total_scale</span>: <span class='ident'>scale1</span> <span class='op'>+</span> <span class='ident'>scale2</span>,
 
-            <span class='ident'>id</span>: <span class='ident'>NEXT_NM_ID</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='kw'>as</span> <span class='ident'>u64</span>
+            <span class='ident'>id</span>: <span class='ident'>next_id</span>(),
         }.<span class='ident'>set</span>(<span class='ident'>cmp</span>::<span class='ident'>max</span>(<span class='ident'>s1</span>, <span class='ident'>s2</span>))
     }
 }
