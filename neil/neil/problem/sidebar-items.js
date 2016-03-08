@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Problem","A problem represents something to be solved using simulated annealing, and provides methods to calculate the energy of a state and generate new states."]]});

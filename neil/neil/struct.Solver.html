@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Solver` struct in crate `neil`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Solver">
+
+    <title>neil::Solver - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>neil</a></p><script>window.sidebarCurrent = {name: 'Solver', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>neil</a>::<wbr><a class='struct' href=''>Solver</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-20' class='srclink' href='../src/neil/solver.rs.html#29-64' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Solver {
+    pub iterations: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub initial_temperature: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub temperature_reduction: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
+    pub max_attempts: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub max_accepts: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub max_rejects: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+}</pre><div class='docblock'><p>A solver will take a problem and use simulated annealing
+to try and find an optimal state.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr class='stab '>
+                                  <td id='structfield.iterations'><code>iterations</code></td><td><div class='docblock'><p>The maximum number of iterations to run the algorithm
+for.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.initial_temperature'><code>initial_temperature</code></td><td><div class='docblock'><p>The initial temperature of the process.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.temperature_reduction'><code>temperature_reduction</code></td><td><div class='docblock'><p>The factor to multiply the temperature by each time it
+is lowered - this should be a number between 0.0 and 1.0.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.max_attempts'><code>max_attempts</code></td><td><div class='docblock'><p>The maximimum number of attempts to find a new state
+before lowering the temperature.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.max_accepts'><code>max_accepts</code></td><td><div class='docblock'><p>The maximum number of accepted new states before lowering
+the temperature.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.max_rejects'><code>max_rejects</code></td><td><div class='docblock'><p>The maximum number of rejected states before terminating the
+process.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h4>
+<div class='docblock'><p>Construct the new default solver.</p>
+</div><h4 id='method.build_new' class='method'><code>fn <a href='#method.build_new' class='fnname'>build_new</a>&lt;F&gt;(builder: F) -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a> <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;mut <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a>)</span></code></h4>
+<div class='docblock'><p>Construct a new solver with a given builder function.</p>
+</div><h4 id='method.solve' class='method'><code>fn <a href='#method.solve' class='fnname'>solve</a>&lt;P&gt;(&amp;self, problem: &amp;P, initial: P::State) -&gt; P::State <span class='where'>where P: <a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>Problem</a></span></code></h4>
+<div class='docblock'><p>Run the solver on the given problem with the given initial state.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "neil";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

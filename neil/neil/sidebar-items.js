@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Solver","A solver will take a problem and use simulated annealing to try and find an optimal state."]],"trait":[["Problem","A problem represents something to be solved using simulated annealing, and provides methods to calculate the energy of a state and generate new states."]]});

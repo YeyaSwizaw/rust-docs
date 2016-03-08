@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Solver","A solver will take a problem and use simulated annealing to try and find an optimal state."]]});
