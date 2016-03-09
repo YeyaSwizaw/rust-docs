@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-20' class='srclink' href='../src/neil/solver.rs.html#29-64' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-22' class='srclink' href='../src/neil/solver.rs.html#29-64' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Solver {
     pub iterations: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
     pub initial_temperature: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
@@ -78,8 +78,8 @@ process.</p>
 <div class='docblock'><p>Construct the new default solver.</p>
 </div><h4 id='method.build_new' class='method'><code>fn <a href='#method.build_new' class='fnname'>build_new</a>&lt;F&gt;(builder: F) -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a> <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;mut <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a>)</span></code></h4>
 <div class='docblock'><p>Construct a new solver with a given builder function.</p>
-</div><h4 id='method.solve' class='method'><code>fn <a href='#method.solve' class='fnname'>solve</a>&lt;P&gt;(&amp;self, problem: &amp;P, initial: P::State) -&gt; P::State <span class='where'>where P: <a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>Problem</a></span></code></h4>
-<div class='docblock'><p>Run the solver on the given problem with the given initial state.</p>
+</div><h4 id='method.solve' class='method'><code>fn <a href='#method.solve' class='fnname'>solve</a>&lt;P&gt;(&amp;self, problem: &amp;P) -&gt; P::State <span class='where'>where P: <a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>Problem</a></span></code></h4>
+<div class='docblock'><p>Run the solver on the given problem.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h4>
 </div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../neil/struct.Solver.html' title='neil::Solver'>Solver</a></code></h4>
 <h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>

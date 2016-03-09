@@ -82,6 +82,11 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
 </pre><pre class='rust '>
 <span class='comment'>//////////////////////////////////////////////////////////////////////////////</span>
 <span class='comment'>//  File: neil/problem.rs</span>
@@ -108,6 +113,11 @@
  */</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Problem</span> {
     <span class='kw'>type</span> <span class='ident'>State</span>;
+
+    <span class='doccomment'>/**
+     * This function should generate an initial state for the problem.
+     */</span>
+    <span class='kw'>fn</span> <span class='ident'>initial_state</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>State</span>;
 
     <span class='doccomment'>/**
      * This function should calculate the energy of a given state,

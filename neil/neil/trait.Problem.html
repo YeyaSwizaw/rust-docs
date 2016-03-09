@@ -46,9 +46,10 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-7' class='srclink' href='../src/neil/problem.rs.html#24-41' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-7' class='srclink' href='../src/neil/problem.rs.html#24-46' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Problem {
     type State;
+    fn <a href='#tymethod.initial_state' class='fnname'>initial_state</a>(&amp;self) -&gt; Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a>;
     fn <a href='#tymethod.energy' class='fnname'>energy</a>(&amp;self, state: &amp;Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>;
     fn <a href='#tymethod.new_state' class='fnname'>new_state</a>(&amp;self, state: &amp;Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a>) -&gt; Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a>;
 }</pre><div class='docblock'><p>A problem represents something to be solved using simulated
@@ -60,7 +61,8 @@ state and generate new states.</p>
         <h3 id='associatedtype.State' class='method stab '><code>type State</code></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.energy' class='method stab '><code>fn <a href='#tymethod.energy' class='fnname'>energy</a>(&amp;self, state: &amp;Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code></h3><div class='docblock'><p>This function should calculate the energy of a given state,
+        <h3 id='tymethod.initial_state' class='method stab '><code>fn <a href='#tymethod.initial_state' class='fnname'>initial_state</a>(&amp;self) -&gt; Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a></code></h3><div class='docblock'><p>This function should generate an initial state for the problem.</p>
+</div><h3 id='tymethod.energy' class='method stab '><code>fn <a href='#tymethod.energy' class='fnname'>energy</a>(&amp;self, state: &amp;Self::<a class='trait' href='../neil/trait.Problem.html' title='neil::Problem'>State</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code></h3><div class='docblock'><p>This function should calculate the energy of a given state,
 as a number between 0.0 and 1.0.</p>
 
 <p>Lower energy means the state is more optimal - simulated
